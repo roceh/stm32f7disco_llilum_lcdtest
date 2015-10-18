@@ -113,7 +113,33 @@ namespace Managed
 
             fixed (byte* textPointer = textArray)
             {
-                BSP_LCD_DisplayStringAt(0, 0, textPointer, 0);
+                BSP_LCD_DisplayStringAt((UInt16)x, (UInt16)y, textPointer, 0);
+            }
+        }
+
+        /// <summary>
+        /// Draw a string at the given position
+        /// </summary>
+        /// <param name="text">text string</param>
+        /// <param name="x">x position</param>
+        /// <param name="y">y position</param>
+        public void DrawCenteredString(string text, int x, int y, int width, int height)
+        {
+            var fWidth = BSP_LCD_GetFontWidth();
+            var fHeight = BSP_LCD_GetFontHeight();
+
+            var textArray = new byte[text.Length + 1];
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                textArray[i] = (byte)text[i];
+            }
+
+            textArray[text.Length] = 0;
+
+            fixed (byte* textPointer = textArray)
+            {
+                BSP_LCD_DisplayStringAt((UInt16)(x + (width/2) - ((fWidth * text.Length)/2)), (UInt16)(y + (height / 2) - (fHeight / 2)), textPointer, 0);
             }
         }
 
@@ -129,14 +155,26 @@ namespace Managed
         }
 
         /// <summary>
-        /// Draws a circle the given position
+        /// Draws a circle at the given position
         /// </summary>
         /// <param name="x">x position</param>
         /// <param name="y">y position</param>
         /// <param name="radius">radius of circle</param>
-        public void DrawCircle(UInt16 x, UInt16 y, UInt16 radius)
+        public void DrawCircle(int x, int y, int radius)
         {
-            BSP_LCD_DrawCircle(x, y, radius);
+            BSP_LCD_DrawCircle((UInt16)x, (UInt16)y, (UInt16)radius);
+        }
+
+        /// <summary>
+        /// Draw rectangle at the given position
+        /// </summary>
+        /// <param name="x">x position</param>
+        /// <param name="y">y position</param>
+        /// <param name="width">width of the rectangle</param>
+        /// <param name="height">height of the rectangle</param>
+        public void DrawRectangle(int x, int y, int width, int height)
+        {
+            BSP_LCD_DrawRect((UInt16) x, (UInt16)y, (UInt16)width, (UInt16)height);
         }
 
         /// <summary>
@@ -245,6 +283,15 @@ namespace Managed
 
         [DllImport("C")]
         internal static extern void BSP_LCD_SetDrawAddress(UInt32 address);
+
+        [DllImport("C")]
+        internal static extern void BSP_LCD_DrawRect(UInt16 xpos, UInt16 ypos, UInt16 width, UInt16 height);
+
+        [DllImport("C")]
+        internal static extern UInt16 BSP_LCD_GetFontWidth();
+
+        [DllImport("C")]
+        internal static extern UInt16 BSP_LCD_GetFontHeight();
 
         [DllImport("C")]
         internal static extern IntPtr BSP_LCD_GetFontBySize(int size);

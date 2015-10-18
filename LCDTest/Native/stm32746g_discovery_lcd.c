@@ -488,6 +488,25 @@ void BSP_LCD_SetFont(sFONT *fonts)
   DrawProp[ActiveLayer].pFont = fonts;
 }
 
+sFONT* BSP_LCD_GetFontBySize(int size)
+{
+	switch (size)
+	{
+	case 8:
+		return &Font8;
+	case 12:
+		return &Font12;
+	case 16:
+		return &Font16;
+	case 20:
+		return &Font20;
+	case 24:
+		return &Font24;
+	default:
+		return 0;
+	}
+}
+
 /**
   * @brief  Gets the LCD text font.
   * @retval Used layer font
@@ -495,6 +514,16 @@ void BSP_LCD_SetFont(sFONT *fonts)
 sFONT *BSP_LCD_GetFont(void)
 {
   return DrawProp[ActiveLayer].pFont;
+}
+
+uint16_t BSP_LCD_GetFontWidth(void)
+{
+	return DrawProp[ActiveLayer].pFont->Width;
+}
+
+uint16_t BSP_LCD_GetFontHeight(void)
+{
+	return DrawProp[ActiveLayer].pFont->Height;
 }
 
 /**

@@ -14,8 +14,9 @@
     {        
         static void Main()
         {
-            var test = new PixelTest();
+            //var test = new PixelTest();
             //var test = new TouchTest();
+            var test = new SimpleUITest();
 
             test.Run();
         }

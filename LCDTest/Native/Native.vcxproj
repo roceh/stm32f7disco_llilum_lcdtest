@@ -138,7 +138,6 @@
     <ClCompile Include="font24.c" />
     <ClCompile Include="font8.c" />
     <ClCompile Include="ft5336.c" />
-    <ClCompile Include="InteropExports_LCD.cpp" />
     <ClCompile Include="stm32746g_discovery.c" />
     <ClCompile Include="stm32746g_discovery_lcd.c" />
     <ClCompile Include="stm32746g_discovery_sdram.c" />

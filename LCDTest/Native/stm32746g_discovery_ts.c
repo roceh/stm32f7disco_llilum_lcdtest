@@ -211,6 +211,21 @@ uint8_t BSP_TS_ITGetStatus(void)
   return (tsDriver->GetITStatus(I2cAddress));
 }
 
+uint8_t BSP_TS_GetTouchInfo(uint32_t *x, uint32_t *y)
+{
+	TS_StateTypeDef ts;
+
+	BSP_TS_GetState(&ts);
+
+	for (int i = 0; i < ts.touchDetected; i++)
+	{
+		x[i] = ts.touchX[i];
+		y[i] = ts.touchY[i];
+	}
+
+	return ts.touchDetected;
+}
+
 /**
   * @brief  Returns status and positions of the touch screen.
   * @param  TS_State: Pointer to touch screen current state structure
