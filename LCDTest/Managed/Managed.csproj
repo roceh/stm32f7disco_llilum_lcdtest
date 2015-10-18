@@ -52,6 +52,10 @@
     <Reference Include="DISCO_F746NG">
       <HintPath>$(LLILUM_SDK)\ZeligBuild\Target\bin\Debug\DISCO_F746NG.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Zelig.Runtime, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\llilum\Scripts\SDKDrop\ZeligBuild\Target\bin\Debug\Microsoft.Zelig.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Zelig.Support.mbed">
       <HintPath>$(LLILUM_SDK)\ZeligBuild\Target\bin\Debug\Microsoft.Zelig.Support.mbed.dll</HintPath>
     </Reference>
@@ -67,6 +71,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TouchTest.cs" />
+    <Compile Include="PixelTest.cs" />
+    <Compile Include="STM32F7DiscoTouch.cs" />
+    <Compile Include="STM32F7DiscoDisplay.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

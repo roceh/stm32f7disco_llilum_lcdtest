@@ -2,4 +2,6 @@
 ARM/
 obj/
 *.sdf
+*.opensdf
 ipch/
+*.ZeligImage
