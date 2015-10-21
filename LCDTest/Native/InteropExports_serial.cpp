@@ -41,7 +41,7 @@ extern "C"
 
 	void tmp_serial_set_flow_control(serial_t* obj, int32_t flowControlType, int32_t rtsPin, int32_t ctsPin)
 	{
-		serial_set_flow_control(obj, (FlowControl)flowControlType, (PinName)rtsPin, (PinName)ctsPin);
+		//serial_set_flow_control(obj, (FlowControl)flowControlType, (PinName)rtsPin, (PinName)ctsPin);
 	}
 
 	bool tmp_serial_readable(serial_t* obj)

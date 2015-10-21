@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -52,6 +52,14 @@
     <Reference Include="DISCO_F746NG">
       <HintPath>$(LLILUM_SDK)\ZeligBuild\Target\bin\Debug\DISCO_F746NG.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CortexM3OnCMSISCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\llilum\Scripts\SDKDrop\ZeligBuild\Target\bin\Debug\Microsoft.CortexM3OnCMSISCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CortexM3OnMBED, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\llilum\Scripts\SDKDrop\ZeligBuild\Target\bin\Debug\Microsoft.CortexM3OnMBED.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Zelig.Runtime, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\llilum\Scripts\SDKDrop\ZeligBuild\Target\bin\Debug\Microsoft.Zelig.Runtime.dll</HintPath>
@@ -59,18 +67,16 @@
     <Reference Include="Microsoft.Zelig.Support.mbed">
       <HintPath>$(LLILUM_SDK)\ZeligBuild\Target\bin\Debug\Microsoft.Zelig.Support.mbed.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System">
+      <HintPath>..\..\..\llilum\Scripts\SDKDrop\ZeligBuild\Target\bin\Debug\System.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="Windows.Devices">
       <HintPath>$(LLILUM_SDK)\ZeligBuild\Target\bin\Debug\Windows.Devices.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Debug.cs" />
     <Compile Include="SimpleUITest.cs" />
     <Compile Include="TouchTest.cs" />
     <Compile Include="PixelTest.cs" />
@@ -83,6 +89,7 @@
     <Compile Include="UI\Control.cs" />
     <Compile Include="UI\Label.cs" />
     <Compile Include="UI\EventArgs.cs" />
+    <Compile Include="UI\ListView.cs" />
     <Compile Include="UI\Panel.cs" />
     <Compile Include="UI\Point.cs" />
     <Compile Include="UI\TouchInfo.cs" />

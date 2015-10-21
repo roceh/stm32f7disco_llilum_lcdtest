@@ -163,7 +163,9 @@ uint8_t BSP_SDRAM_Init(void)
   sdramHandle.Init.WriteProtection    = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
   sdramHandle.Init.SDClockPeriod      = SDCLOCK_PERIOD;
   sdramHandle.Init.ReadBurst          = FMC_SDRAM_RBURST_ENABLE;
-  sdramHandle.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_0;
+
+  // um is my disco board faulty - this is defined a _1 by ST by i have lots of sdram read problems with my board
+  sdramHandle.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_2; 
   
   /* SDRAM controller initialization */
 

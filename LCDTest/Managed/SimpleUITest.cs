@@ -21,9 +21,19 @@ namespace Managed
             var label = new Label(application) { Left = 10, Top = 30, Width = 200, Height = 16, Text = "Hello World" };
             panel.Add(label);
 
-            var button = new Button(application) { Left = 10, Top = 100, Width = 200, Height = 100, Text = "Click Me" };
-            button.Touch += (s, e) => { label.Text = "Clicked"; };
+            var button = new Button(application) { Left = 10, Top = 100, Width = 200, Height = 100, Text = "Touch" };
+            button.TouchStart += (s, e) => { label.Text = "Touched"; };
             panel.Add(button);
+
+            var listview = new ListView(application) { Left = 239, Top = 0, Width = 240, Height = 272, RowHeight = 30 };
+
+            for (int i = 0; i < 1000; i++)
+            {
+                listview.Items.Add(String.Format("ListView Item {0}", i));
+            }
+
+            panel.Add(listview);
+
             application.Run(panel);
         }
     }

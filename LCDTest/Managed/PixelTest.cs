@@ -12,7 +12,7 @@ namespace Managed
     /// </summary>
     public class PixelTest
     {
-        public void Run()
+        public unsafe void Run()
         {
             var timer = new Timer();
             timer.start();
@@ -28,7 +28,7 @@ namespace Managed
             string infoString = "";
 
             while (true)
-            {
+            {                
                 // fill screen with pixels
                 for (UInt16 x = 0; x < 480; x++)
                 {
@@ -42,9 +42,9 @@ namespace Managed
                 if (timer.read_ms() - lastTick > 2000)
                 {
                     infoString = String.Format("FPS: {0} MEMAVAIL: {1} MEMALOC: {2}",
-                        display.Fps,
-                        Microsoft.Zelig.Runtime.MemoryManager.Instance.AvailableMemory,
-                        Microsoft.Zelig.Runtime.MemoryManager.Instance.AllocatedMemory);
+                       display.Fps,
+                       Microsoft.Zelig.Runtime.MemoryManager.Instance.AvailableMemory,
+                       Microsoft.Zelig.Runtime.MemoryManager.Instance.AllocatedMemory);
 
                     lastTick = timer.read_ms();
                 }

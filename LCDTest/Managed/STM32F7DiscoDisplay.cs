@@ -94,6 +94,11 @@ namespace Managed
             _timer.start();
         }
 
+        public UInt32 GetBackBufferAddress()
+        {
+            return _buffers[_backBuffer];
+        }
+
         /// <summary>
         /// Draw a string at the given position
         /// </summary>
@@ -197,7 +202,7 @@ namespace Managed
             var currentTick = _timer.read_ms();
 
             // calculate the fps
-            if (currentTick - _lastFpsTrackTick > 1000)
+            if (currentTick - _lastFpsTrackTick >= 1000)
             {
                 _lastFpsTrackTick = currentTick;
 

@@ -18,7 +18,7 @@ namespace Managed.UI
         public int Top { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public Application Application { get; set; }
+        public Application Application { get { return _application; } }
 
         public int AbsoluteLeft
         {
@@ -91,7 +91,29 @@ namespace Managed.UI
                         var te = e as TouchEventArgs;
                         if (WithinBounds(te.Position))
                         {
-                            OnTouch(te);
+                            OnTouchStart(te);
+                            return true;
+                        }
+                        break;
+                    }
+
+                case UIMessage.TouchMove:
+                    {
+                        var te = e as TouchEventArgs;
+                        if (WithinBounds(te.Position))
+                        {
+                            OnTouchMove(te);
+                            return true;
+                        }
+                        break;
+                    }
+
+                case UIMessage.TouchEnd:
+                    {
+                        var te = e as TouchEventArgs;
+                        if (WithinBounds(te.Position))
+                        {
+                            OnTouchEnd(te);
                             return true;
                         }
                         break;
@@ -117,11 +139,23 @@ namespace Managed.UI
             }
         }
 
-        public event EventHandler<TouchEventArgs> Touch;
+        public event EventHandler<TouchEventArgs> TouchStart;
+        public event EventHandler<TouchEventArgs> TouchMove;
+        public event EventHandler<TouchEventArgs> TouchEnd;
 
-        protected virtual void OnTouch(TouchEventArgs args)
+        protected virtual void OnTouchStart(TouchEventArgs args)
         {
-            if (Touch != null) Touch(this, args);
+            if (TouchStart != null) TouchStart(this, args);
+        }
+
+        protected virtual void OnTouchMove(TouchEventArgs args)
+        {
+            if (TouchMove != null) TouchMove(this, args);
+        }
+
+        protected virtual void OnTouchEnd(TouchEventArgs args)
+        {
+            if (TouchEnd != null) TouchEnd(this, args);
         }
     }
 }
