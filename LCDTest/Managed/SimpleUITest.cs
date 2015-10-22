@@ -29,7 +29,7 @@ namespace Managed
 
             for (int i = 0; i < 1000; i++)
             {
-                listview.Items.Add(String.Format("ListView Item {0}", i));
+                listview.Items.Add("ListView Item " + i.ToString());
             }
 
             panel.Add(listview);

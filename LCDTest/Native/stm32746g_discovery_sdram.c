@@ -169,7 +169,7 @@ uint8_t BSP_SDRAM_Init(void)
   
   /* SDRAM controller initialization */
 
-  BSP_SDRAM_MspInit(&sdramHandle, NULL); /* __weak function can be rewritten by the application */
+  BSP_SDRAM_MspInit(&sdramHandle, 0); /* __weak function can be rewritten by the application */
 
   if(HAL_SDRAM_Init(&sdramHandle, &Timing) != HAL_OK)
   {
@@ -206,7 +206,7 @@ uint8_t BSP_SDRAM_DeInit(void)
   }
   
   /* SDRAM controller de-initialization */
-  BSP_SDRAM_MspDeInit(&sdramHandle, NULL);
+  BSP_SDRAM_MspDeInit(&sdramHandle, 0);
   
   return sdramstatus;
 }
