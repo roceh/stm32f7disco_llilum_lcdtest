@@ -5,3 +5,5 @@ obj/
 *.opensdf
 ipch/
 *.ZeligImage
+Debug/
+tmp_debug.bat
