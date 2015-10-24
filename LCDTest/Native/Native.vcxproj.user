@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <LlilumPyOcdPath>$(LlilumSDK)tools\st-util.exe</LlilumPyOcdPath>
+    <LlilumPyOcdArgs>-p 3333</LlilumPyOcdArgs>
+    <DebuggerFlavor>LlilumDebugger</DebuggerFlavor>
+    <LlilumFlashToolPath>$(LlilumSDK)tools\st-flash.exe</LlilumFlashToolPath>
+    <LlilumDebuggerDebuggerAttach>false</LlilumDebuggerDebuggerAttach>
+    <LlilumUseFlashTool>true</LlilumUseFlashTool>
+    <LlilumGdbArgs>
+    </LlilumGdbArgs>
+    <LlilumFlashToolArgs>write $(OutDir)\$(LlilumOutputName).bin 0x8000000</LlilumFlashToolArgs>
+  </PropertyGroup>
+</Project>
