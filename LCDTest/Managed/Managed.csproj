@@ -77,6 +77,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Debug.cs" />
+    <Compile Include="InteropHelper.cs" />
+    <Compile Include="SDCard.cs" />
+    <Compile Include="SDCardTest.cs" />
+    <Compile Include="SDFileStream.cs" />
+    <Compile Include="SDInterop.cs" />
     <Compile Include="SimpleUITest.cs" />
     <Compile Include="TouchTest.cs" />
     <Compile Include="PixelTest.cs" />

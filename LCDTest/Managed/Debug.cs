@@ -43,6 +43,7 @@ namespace Managed
 
             _port.WriteByte((byte)13);
             _port.WriteByte((byte)10);
+            _port.Flush();
         }
     }
 }
