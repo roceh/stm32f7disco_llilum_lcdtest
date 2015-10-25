@@ -49,12 +49,12 @@ namespace Managed
         /// <summary>
         /// Width of the screen
         /// </summary>
-        private const int ScreenWidth = 480;
+        public const int ScreenWidth = 480;
 
         /// <summary>
         /// Height of the screen
         /// </summary>
-        private const int ScreenHeight = 272;
+        public const int ScreenHeight = 272;
 
         private int _lastFlipTime = 0;
         private int _activeBuffer = 0;
@@ -159,6 +159,7 @@ namespace Managed
             *((UInt32*)(_buffers[_backBuffer] + (4 * (y * ScreenWidth + x)))) = color;
         }
 
+
         /// <summary>
         /// Draws a circle at the given position
         /// </summary>
@@ -189,6 +190,81 @@ namespace Managed
         public void Clear(UInt32 color)
         {
             BSP_LCD_Clear(color);
+        }
+
+        /// <summary>
+        /// Clear the screen with given bitmap 
+        /// </summary>
+        /// <param name="bitmap">bitmap to clear with</param>
+        public void Clear(DiscoBitmap bitmap)
+        {
+            if (bitmap.Width != ScreenWidth || bitmap.Height != ScreenHeight)
+            {
+                throw new Exception("Bitmap has to match screen size");
+            }
+            
+            UInt32 pixels = bitmap.Width * bitmap.Height;
+
+            fixed (byte* ptr = bitmap.Data)
+            {
+                UInt32* back = (UInt32*)GetBackBufferAddress();
+                UInt32* pixel = (UInt32*)ptr;
+
+                for (UInt32 i = 0; i < pixels; i++)
+                {
+                    *back++ = *pixel++;
+                }
+            }
+        }
+
+        private UInt32 AlphaBlend(UInt32 p1, UInt32 p2)
+        {
+            const UInt32 AMASK = 0xFF000000;
+            const UInt32 RBMASK = 0x00FF00FF;
+            const UInt32 GMASK = 0x0000FF00;
+            const UInt32 AGMASK = AMASK | GMASK;
+            const UInt32 ONEALPHA = 0x01000000;
+            UInt32 a = (p2 & AMASK) >> 24;
+
+            if (a == 255)
+            { return p2; }
+
+            if (a == 0)
+            { return p1; }
+            
+            UInt32 na = 255 - a;
+            UInt32 rb = ((na * (p1 & RBMASK)) + (a * (p2 & RBMASK))) >> 8;
+            UInt32 ag = (na * ((p1 & AGMASK) >> 8)) + (a * (ONEALPHA | ((p2 & GMASK) >> 8)));
+            return ((rb & RBMASK) | (ag & AGMASK));
+        }
+
+        public void DrawBitmap(DiscoBitmap bitmap, UInt32 sx, UInt32 sy, int dx, int dy, UInt32 w, UInt32 h)
+        {
+            fixed (byte* ptr = bitmap.Data)
+            {
+                UInt32* backBuffer = (UInt32*)GetBackBufferAddress();
+
+                UInt32* source = (UInt32*)ptr + (sx + sy * bitmap.Width);
+                UInt32* destination = backBuffer + (dx + dy * ScreenWidth);
+
+                UInt32 sourceRemain = bitmap.Width - w;
+                UInt32 destinationRemain = ScreenWidth - w;
+
+                //Debug.Instance.Log(sourceRemain.ToString() + "," + destinationRemain.ToString());
+
+                for (UInt32 y = 0; y < h; y++)
+                {
+                    for (UInt32 x = 0; x < w; x++)
+                    {
+                        *destination = AlphaBlend(*destination, *source);
+                        destination++;
+                        source++;
+                    }
+
+                    source += sourceRemain;
+                    destination += destinationRemain;
+                }
+            }
         }
 
         /// <summary>

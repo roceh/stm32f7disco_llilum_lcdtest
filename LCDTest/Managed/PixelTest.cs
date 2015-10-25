@@ -41,10 +41,13 @@ namespace Managed
                 // show info every couple of seconds
                 if (timer.read_ms() - lastTick > 2000)
                 {
-                    infoString = String.Format("FPS: {0} MEMAVAIL: {1} MEMALOC: {2}",
-                       display.Fps,
-                       Microsoft.Zelig.Runtime.MemoryManager.Instance.AvailableMemory,
-                       Microsoft.Zelig.Runtime.MemoryManager.Instance.AllocatedMemory);
+                    // string.format broken?
+                    //infoString = String.Format("FPS: {0} MEMAVAIL: {1} MEMALOC: {2}",
+                    //    display.Fps,
+                    //    Microsoft.Zelig.Runtime.MemoryManager.Instance.AvailableMemory,
+                    //    Microsoft.Zelig.Runtime.MemoryManager.Instance.AllocatedMemory);
+
+                    infoString = "FPS: " + display.Fps.ToString() + " MEMAVAIL: " + Microsoft.Zelig.Runtime.MemoryManager.Instance.AvailableMemory.ToString();
 
                     lastTick = timer.read_ms();
                 }
@@ -64,7 +67,7 @@ namespace Managed
                 }
 
                 // show the back buffer - true to lock fps
-                display.Flip(true);
+                display.Flip(false);
             }
         }
     }

@@ -35,8 +35,9 @@
 
                 //var test = new PixelTest();
                 //var test = new TouchTest();
-                var test = new SimpleUITest();
+                //var test = new SimpleUITest();
                 //var test = new SDCardTest();
+                var test = new BitmapTest();
                 test.Run();
             }
             catch (Exception ex)

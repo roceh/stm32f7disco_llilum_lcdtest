@@ -69,5 +69,27 @@ namespace Managed
 
             return false;
         }
+
+        public static byte[] ReadAllBytes(string path)
+        {
+            using (var fsRead = new SDFileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+            {
+                int bytesRead;
+
+                byte[] result = new byte[fsRead.Length];
+
+                int i = 0;
+
+                // read to end of file
+                while ((bytesRead = fsRead.Read(result, i, 4096)) > 0)
+                {
+                    i += bytesRead;
+                }
+
+                return result;
+            }
+
+            throw new Exception("Unable to load file");
+        }
     }
 }
