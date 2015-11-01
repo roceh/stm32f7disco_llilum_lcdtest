@@ -31,6 +31,23 @@ namespace Managed.Graphics
             }
         }
 
+        public struct Kerning
+        {
+            public char First;
+            public char Second;
+
+            public Kerning(char first, char second)
+            {
+                First = first;
+                Second = second;
+            }
+        }
+
+        
+        public Dictionary<char, Character> Characters { get; set; }
+        public Dictionary<int, Page> Pages { get; set; }
+        //public Dictionary<Kerning, int> Kernings { get; set; } generics llvm problem not liking this
+
         public Font()
         {
         }
@@ -131,6 +148,7 @@ namespace Managed.Graphics
             
             Dictionary<int, Page> pages = new Dictionary<int, Page>();
             Dictionary<char, Character> characters = new Dictionary<char, Character>();
+            //Dictionary<Kerning, int> kernings = new Dictionary<Kerning, int>();
 
             byte[] data = SDCardManager.ReadAllBytes(fileName);
 
@@ -181,7 +199,7 @@ namespace Managed.Graphics
                             pages.Add(id, new Page(id, file, texture));
                             break;
                         case "char":
-                            var charData = new Character
+                            var character = new Character
                             {
                                 Id = (char)GetInt(items, "id"),
                                 Rect = new Rect(GetInt(items, "x"), GetInt(items, "y"), GetInt(items, "width"), GetInt(items, "height")),
@@ -189,21 +207,27 @@ namespace Managed.Graphics
                                 XAdvance = GetInt(items, "xadvance"),
                                 Page = GetInt(items, "page"),
                                 Channel = GetInt(items, "chnl")
-                            };
-
-                            characters.Add(charData.Id, charData);
+                            };                      
+                            characters.Add(character.Id, character);
                             break;
+                        /*case "kerning":
+                            var kerning = new Kerning
+                            {
+                                First = (char)GetInt(items, "first"),
+                                Second = (char)GetInt(items, "second")
+                            };
+                            kernings.Add(kerning, GetInt(items, "amount"));
+                            break;*/
+
                     }
                 }                
             }
 
             font.Pages = pages;
             font.Characters = characters;
+            //font.Kernings = kernings;
                                     
             return font;
         }
-
-        public Dictionary<char, Character> Characters { get; set; }
-        public Dictionary<int, Page> Pages { get; set; }
     }
 }

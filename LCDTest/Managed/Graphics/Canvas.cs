@@ -146,17 +146,28 @@ namespace Managed.Graphics
 
             Font.Character fontCharacter;
 
+            int spacingFromPrevious;
+
             for (int i = 0; i < text.Length; i++)
             {
+                if (i == 0)
+                {
+                    // first chracter no spacing
+                    spacingFromPrevious = 0;
+                }
+                //else if (font.Kernings.TryGetValue(new Font.Kerning(text[i - 1], text[i]), out spacingFromPrevious))
+                else
+                {
+                    // no kerning found - default to 1 pixel
+                    spacingFromPrevious = 1;
+                }
+
+                maxWidth += spacingFromPrevious;
+
                 if (font.Characters.TryGetValue(text[i], out fontCharacter))
                 {
                     maxWidth += fontCharacter.Rect.Width;
                     maxHeight = Math.Max(maxHeight, fontCharacter.Offset.Y + fontCharacter.Rect.Height);
-
-                    if (i < text.Length - 1)
-                    {
-                        maxWidth++;
-                    }
                 }
             }
 
@@ -174,9 +185,26 @@ namespace Managed.Graphics
         {
             Font.Character fontCharacter;
             Font.Page fontPage;
+            int spacingFromPrevious;
 
             for (int i = 0; i < text.Length; i++)
             {
+                if (i == 0)
+                {
+                    // first chracter no spacing
+                    spacingFromPrevious = 0;
+                }
+                //else if (font.Kernings.TryGetValue(new Font.Kerning(text[i - 1], text[i]), out spacingFromPrevious))
+                else
+                {
+                    // no kerning found - default to 1 pixel
+                    spacingFromPrevious = 1;
+                }
+
+                // adjust the spacing to draw the character
+                x += spacingFromPrevious;
+
+                // character found ?
                 if (font.Characters.TryGetValue(text[i], out fontCharacter))
                 {
                     if (font.Pages.TryGetValue(fontCharacter.Page, out fontPage))
@@ -186,7 +214,7 @@ namespace Managed.Graphics
                             fontCharacter.Rect.Width, fontCharacter.Rect.Height);                       
                     }
 
-                    x += fontCharacter.Rect.Width + 1;
+                    x += fontCharacter.Rect.Width;
                 }
             }
         }
