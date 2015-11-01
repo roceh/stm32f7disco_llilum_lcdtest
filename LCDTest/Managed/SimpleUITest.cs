@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Windows.Devices.Gpio;
-using Microsoft.Zelig.Support.mbed;
-using Microsoft.Zelig.DISCO_F746NG;
-using Managed.UI;
+﻿using Managed.UI;
 
 namespace Managed
 {
@@ -12,20 +6,21 @@ namespace Managed
     /// Test for simple ui
     /// </summary>
     public class SimpleUITest
-    {        
+    {
         public void Run()
         {
-            var application = new Application();
+            Application application = new Application();
             application.ShowDebug = true;
-            var panel = new Panel(application) { Left = 0, Top = 0, Width = 480, Height = 272 };
-            var label = new Label(application) { Left = 10, Top = 30, Width = 200, Height = 16, Text = "Hello World" };
+            Panel panel = new Panel(application) { Left = 0, Top = 0, Width = 480, Height = 272 };
+
+            Label label = new Label(application) { Left = 10, Top = 30, Width = 200, Height = 32, Text = "Hello World" };
             panel.Add(label);
 
-            var button = new Button(application) { Left = 10, Top = 100, Width = 200, Height = 100, Text = "Touch" };
+            Button button = new Button(application) { Left = 10, Top = 100, Width = 200, Height = 100, Text = "Touch" };
             button.TouchStart += (s, e) => { label.Text = "Touched"; };
             panel.Add(button);
 
-            var listview = new ListView(application) { Left = 239, Top = 0, Width = 240, Height = 272, RowHeight = 30 };
+            ListView listview = new ListView(application) { Left = 239, Top = 0, Width = 240, Height = 272, RowHeight = 30 };
 
             for (int i = 0; i < 1000; i++)
             {

@@ -1,18 +1,17 @@
-﻿using System;
+﻿using Managed.Graphics;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Managed.UI
 {
     public class Control
     {
         private Application _application;
+        private ArrayList _controls = new ArrayList(); // generics seem a bit glitchy?
+        private int _controlCount = 0;
 
-        public List<Control> _controls = new List<Control>();
-
-        public IEnumerable<Control> Controls { get { return _controls; } }
+        //public IEnumerable<Control> Controls { get { return _controls; } }
         public Control Parent { get; set; }
         public int Left { get; set; }
         public int Top { get; set; }
@@ -64,7 +63,7 @@ namespace Managed.UI
                 control.Parent.Remove(control);
             }
 
-            control.Parent = this;
+            control.Parent = this;                        
             _controls.Add(control);
         }
 
@@ -76,7 +75,7 @@ namespace Managed.UI
 
         public virtual bool SendMessage(UIMessage message, EventArgs e)
         {
-            foreach (var control in _controls)
+            foreach (Control control in _controls)
             {
                 if (control.SendMessage(message, e))
                 {
@@ -125,7 +124,7 @@ namespace Managed.UI
 
         public virtual void Draw()
         {
-            foreach (var control in _controls)
+            foreach (Control control in _controls)
             {
                 control.Draw();
             }            
@@ -133,7 +132,7 @@ namespace Managed.UI
 
         public virtual void Update(float delta)
         {
-            foreach (var control in _controls)
+            foreach (Control control in _controls)
             {
                 control.Update(delta);
             }

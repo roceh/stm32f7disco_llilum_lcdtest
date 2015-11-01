@@ -77,18 +77,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Debug.cs" />
-    <Compile Include="DiscoBitmap.cs" />
-    <Compile Include="InteropHelper.cs" />
+    <Compile Include="Graphics\Bitmap.cs" />
+    <Compile Include="Graphics\CohenSutherland.cs" />
+    <Compile Include="Graphics\Font.cs" />
+    <Compile Include="Graphics\Rect.cs" />
+    <Compile Include="Graphics\Size.cs" />
+    <Compile Include="Memory\SDRAMInterop.cs" />
+    <Compile Include="MIsc\InteropHelper.cs" />
     <Compile Include="BitmapTest.cs" />
-    <Compile Include="SDCard.cs" />
+    <Compile Include="Graphics\DisplayInterop.cs" />
+    <Compile Include="SDCard\SDCard.cs" />
     <Compile Include="SDCardTest.cs" />
-    <Compile Include="SDFileStream.cs" />
-    <Compile Include="SDInterop.cs" />
+    <Compile Include="SDCard\SDFileStream.cs" />
+    <Compile Include="SDCard\SDCardInterop.cs" />
     <Compile Include="SimpleUITest.cs" />
     <Compile Include="TouchTest.cs" />
     <Compile Include="PixelTest.cs" />
-    <Compile Include="STM32F7DiscoTouch.cs" />
-    <Compile Include="STM32F7DiscoDisplay.cs" />
+    <Compile Include="Graphics\Touch.cs" />
+    <Compile Include="Graphics\Canvas.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Application.cs" />
@@ -98,7 +104,7 @@
     <Compile Include="UI\EventArgs.cs" />
     <Compile Include="UI\ListView.cs" />
     <Compile Include="UI\Panel.cs" />
-    <Compile Include="UI\Point.cs" />
+    <Compile Include="Graphics\Point.cs" />
     <Compile Include="UI\TouchInfo.cs" />
     <Compile Include="UI\UIMessage.cs" />
   </ItemGroup>

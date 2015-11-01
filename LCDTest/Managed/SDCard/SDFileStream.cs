@@ -1,49 +1,50 @@
-﻿using System;
+﻿using Managed.Misc;
+using System;
 using System.IO;
 
-namespace Managed
+namespace Managed.SDCard
 {
     public unsafe class SDFileStream : Stream
     {
-        SDInterop.FIL* _fp = null;
+        SDCardInterop.FIL* _fp = null;
                 
         public SDFileStream(string path, FileMode mode, FileAccess access) : base()
         {
-            _fp = SDInterop.FILAlloc();
+            _fp = SDCardInterop.FILAlloc();
 
             byte fatfsMode = 0;
 
             switch (mode)
             {
                 case FileMode.CreateNew:
-                    fatfsMode |= SDInterop.FA_CREATE_NEW;
+                    fatfsMode |= SDCardInterop.FA_CREATE_NEW;
                     break;
                 case FileMode.Create:
-                    fatfsMode |= SDInterop.FA_CREATE_ALWAYS;
+                    fatfsMode |= SDCardInterop.FA_CREATE_ALWAYS;
                     break;
                 case FileMode.Append:
                 case FileMode.OpenOrCreate:
-                    fatfsMode |= SDInterop.FA_OPEN_ALWAYS;
+                    fatfsMode |= SDCardInterop.FA_OPEN_ALWAYS;
                     break;
                 case FileMode.Open:
                 case FileMode.Truncate:
-                    fatfsMode |= SDInterop.FA_OPEN_EXISTING;
+                    fatfsMode |= SDCardInterop.FA_OPEN_EXISTING;
                     break;
             }
 
             if ((access & FileAccess.Read) != 0)
             {
-                fatfsMode |= SDInterop.FA_READ;
+                fatfsMode |= SDCardInterop.FA_READ;
             }
 
             if ((access & FileAccess.Write) != 0)
             {
-                fatfsMode |= SDInterop.FA_WRITE;
+                fatfsMode |= SDCardInterop.FA_WRITE;
             }
             
             fixed (byte * pathBytes = InteropHelper.GetNullTerminated(path))
             {
-                if (SDInterop.f_open(_fp, pathBytes, fatfsMode) != SDInterop.FRESULT.FR_OK)
+                if (SDCardInterop.f_open(_fp, pathBytes, fatfsMode) != SDCardInterop.FRESULT.FR_OK)
                 {
                     throw new Exception("Unable to open sdcard file");
                 }               
@@ -63,7 +64,7 @@ namespace Managed
 
             if (mode == FileMode.Truncate)
             {
-                if (SDInterop.f_truncate(_fp) != SDInterop.FRESULT.FR_OK)
+                if (SDCardInterop.f_truncate(_fp) != SDCardInterop.FRESULT.FR_OK)
                 {
                     throw new Exception("Unable to truncate sdcard file");
                 }
@@ -98,7 +99,7 @@ namespace Managed
         {
             get
             {
-                return SDInterop.GetFileSize(_fp);
+                return SDCardInterop.GetFileSize(_fp);
             }
         }
 
@@ -106,12 +107,12 @@ namespace Managed
         {
             get
             {
-                return SDInterop.GetFilePosition(_fp);
+                return SDCardInterop.GetFilePosition(_fp);
             }
 
             set
             {
-                if (SDInterop.f_lseek(_fp, (UInt32)value) != SDInterop.FRESULT.FR_OK)
+                if (SDCardInterop.f_lseek(_fp, (UInt32)value) != SDCardInterop.FRESULT.FR_OK)
                 {
                     throw new Exception("SD card seek error");
                 }
@@ -120,7 +121,7 @@ namespace Managed
 
         public override void Flush()
         {
-            SDInterop.f_sync(_fp);
+            SDCardInterop.f_sync(_fp);
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -129,7 +130,7 @@ namespace Managed
 
             fixed (byte *bufferPtr = buffer)
             {
-                if (SDInterop.f_read(_fp, bufferPtr + offset, (UInt32) count, &bytesRead) != SDInterop.FRESULT.FR_OK)
+                if (SDCardInterop.f_read(_fp, bufferPtr + offset, (UInt32) count, &bytesRead) != SDCardInterop.FRESULT.FR_OK)
                 {
                     throw new Exception("SD card file read error");
                 }
@@ -143,19 +144,19 @@ namespace Managed
             switch (origin)
             {
                 case SeekOrigin.Begin:
-                    if (SDInterop.f_lseek(_fp, (UInt32)offset) != SDInterop.FRESULT.FR_OK)
+                    if (SDCardInterop.f_lseek(_fp, (UInt32)offset) != SDCardInterop.FRESULT.FR_OK)
                     {
                         throw new Exception("SD card seek error");
                     }
                     break;
                 case SeekOrigin.Current:
-                    if (SDInterop.f_lseek(_fp, (UInt32) (Position + offset)) != SDInterop.FRESULT.FR_OK)
+                    if (SDCardInterop.f_lseek(_fp, (UInt32) (Position + offset)) != SDCardInterop.FRESULT.FR_OK)
                     {
                         throw new Exception("SD card seek error");
                     }
                     break;
                 case SeekOrigin.End:
-                    if (SDInterop.f_lseek(_fp, (UInt32) (Length - offset)) != SDInterop.FRESULT.FR_OK)
+                    if (SDCardInterop.f_lseek(_fp, (UInt32) (Length - offset)) != SDCardInterop.FRESULT.FR_OK)
                     {
                         throw new Exception("SD card seek error");
                     }
@@ -176,7 +177,7 @@ namespace Managed
                 Position = value;
 
                 // truncate the file down
-                if (SDInterop.f_truncate(_fp) != SDInterop.FRESULT.FR_OK)
+                if (SDCardInterop.f_truncate(_fp) != SDCardInterop.FRESULT.FR_OK)
                 {
                     throw new Exception("Unable to truncate sdcard file");
                 }
@@ -197,7 +198,7 @@ namespace Managed
                     // loop until file is length required
                     while (Length < value)
                     {
-                        if (SDInterop.f_write(_fp, bufferPtr, (UInt32) Math.Min(Length - value, PadSize), &bytesWritten) != SDInterop.FRESULT.FR_OK)
+                        if (SDCardInterop.f_write(_fp, bufferPtr, (UInt32) Math.Min(Length - value, PadSize), &bytesWritten) != SDCardInterop.FRESULT.FR_OK)
                         {
                             throw new Exception("SD card file write error");
                         }
@@ -215,7 +216,7 @@ namespace Managed
 
             fixed (byte* bufferPtr = buffer)
             {
-                if (SDInterop.f_write(_fp, bufferPtr + offset, (UInt32)count, &bytesWritten) != SDInterop.FRESULT.FR_OK)
+                if (SDCardInterop.f_write(_fp, bufferPtr + offset, (UInt32)count, &bytesWritten) != SDCardInterop.FRESULT.FR_OK)
                 {
                     throw new Exception("SD card file write error");
                 }
@@ -224,12 +225,12 @@ namespace Managed
 
         public override void Close()
         {
-            if (SDInterop.f_close(_fp) != SDInterop.FRESULT.FR_OK)
+            if (SDCardInterop.f_close(_fp) != SDCardInterop.FRESULT.FR_OK)
             {
                 throw new Exception("SD card file close error");
             }
 
-            SDInterop.FILFree(_fp);
+            SDCardInterop.FILFree(_fp);
 
             _fp = null;
 

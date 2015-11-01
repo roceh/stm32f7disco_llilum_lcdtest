@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Windows.Devices.Gpio;
 using Microsoft.Zelig.Support.mbed;
-using Microsoft.Zelig.DISCO_F746NG;
+using Managed.Graphics;
 
 namespace Managed
 {
@@ -21,8 +18,8 @@ namespace Managed
             int lastTick = timer.read_ms();
 
             // create double buffered display
-            var display = new STM32F7DiscoDisplay();
-            var touch = new STM32F7DiscoTouch();
+            var canvas = new Canvas();
+            var touch = new Touch();
 
             string infoString = "";
 
@@ -30,28 +27,28 @@ namespace Managed
             {
                 int touches = touch.GetTouchInfo();
 
-                display.Clear(STM32F7DiscoDisplay.LCD_COLOR_GREEN);
+                canvas.Clear(0xFFFFFFFF);
 
                 for (int i = 0; i < touches; i++)
                 {
-                    display.DrawCircle((UInt16)Math.Max(50, Math.Min(480 - 50 - 1, touch.X[i])), (UInt16)Math.Max(50, Math.Min(272 - 50 - 1, touch.Y[i])), 50);
+                    canvas.DrawCircle((UInt16)Math.Max(50, Math.Min(480 - 50 - 1, touch.X[i])), (UInt16)Math.Max(50, Math.Min(272 - 50 - 1, touch.Y[i])), 50, 0xFFFF0000);
                 }
                 
                 // show info every couple of seconds
                 if (timer.read_ms() - lastTick > 2000)
                 {
                     infoString = String.Format("FPS: {0} MEMAVAIL: {1} MEMALOC: {2}",
-                        display.Fps,
+                        canvas.Fps,
                         Microsoft.Zelig.Runtime.MemoryManager.Instance.AvailableMemory,
                         Microsoft.Zelig.Runtime.MemoryManager.Instance.AllocatedMemory);
 
                     lastTick = timer.read_ms();
                 }
 
-                display.DrawString(infoString, 0, 0);
+                //canvas.DrawString(infoString, 0, 0);
 
-                // show the back buffer - true to lock fps
-                display.Flip(true);
+                // show the back buffer
+                canvas.Flip();
             }
         }
     }

@@ -40,6 +40,6 @@ extern "C"
 #ifndef TARGET_K64F
 		return spi_busy(obj);
 #endif
-		return 0;
+        return 0;
 	}
 }

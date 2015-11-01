@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Managed.UI
+﻿namespace Managed.UI
 {
     public class Label : Control
     {
@@ -17,7 +11,7 @@ namespace Managed.UI
         {
             base.Draw();
 
-            Application.Display.DrawCenteredString(Text, AbsoluteLeft, AbsoluteTop, Width, Height);
+            Application.Display.DrawCenteredString(Text, AbsoluteLeft, AbsoluteTop, Width, Height, Application.SystemFont);
         }
     }
 }

@@ -1,14 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Runtime.InteropServices;
+﻿using Managed.Misc;
+using System;
 
-
-namespace Managed
+namespace Managed.SDCard
 {
     /// <summary>
     /// C# Map onto Chan's FatFS
     /// </summary>
-    public unsafe static class SDCard 
+    public unsafe static class SDCardManager 
     {
         /// <summary>
         /// Path to mounted sd card
@@ -18,7 +16,7 @@ namespace Managed
         /// <summary>
         /// Handle to mounted fs
         /// </summary>
-        private static SDInterop.FATFS* _fsHandle;
+        private static SDCardInterop.FATFS* _fsHandle;
         
         /// <summary>
         /// Mount the SD cards file system
@@ -27,14 +25,14 @@ namespace Managed
         {
             fixed (byte* path = _path)
             {
-                if (SDInterop.FATFS_LinkDriver(SDInterop.GetSDDriver(), path) != 0)
+                if (SDCardInterop.FATFS_LinkDriver(SDCardInterop.GetSDDriver(), path) != 0)
                 {
                     throw new Exception("Unable to initialise file system interface");
                 }
                 
-                _fsHandle = SDInterop.FATFSAlloc();
+                _fsHandle = SDCardInterop.FATFSAlloc();
 
-                if (SDInterop.f_mount(_fsHandle, path, 0) != SDInterop.FRESULT.FR_OK)
+                if (SDCardInterop.f_mount(_fsHandle, path, 0) != SDCardInterop.FRESULT.FR_OK)
                 {
                     throw new Exception("Unable to mount SD Card");
                 }
@@ -52,17 +50,17 @@ namespace Managed
             {
                 fixed (byte* pathBytes = InteropHelper.GetNullTerminated(path))
                 {
-                    SDInterop.FILINFO* filinfo = SDInterop.FILINFOAlloc();
+                    SDCardInterop.FILINFO* filinfo = SDCardInterop.FILINFOAlloc();
                     try
                     {
-                        if (SDInterop.f_stat(pathBytes, filinfo) == SDInterop.FRESULT.FR_OK)
+                        if (SDCardInterop.f_stat(pathBytes, filinfo) == SDCardInterop.FRESULT.FR_OK)
                         {
                             return true;
                         }
                     }
                     finally
                     {
-                        SDInterop.FILINFOFree(filinfo);
+                        SDCardInterop.FILINFOFree(filinfo);
                     }
                 }
             }

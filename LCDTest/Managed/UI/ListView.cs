@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Managed.Graphics;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Managed.UI
 {
@@ -35,10 +33,10 @@ namespace Managed.UI
 
             for (int i = 0; i < _items.Count; i++)
             {
-                if ((i * RowHeight) - (int) YOffset > 0 && (i * RowHeight) - (int) YOffset + RowHeight < Height)
+                if ((i * RowHeight) - (int) YOffset > -RowHeight && (i * RowHeight) - (int) YOffset + RowHeight < Height + RowHeight)
                 {
-                    Application.Display.DrawRectangle(left, top + (i * RowHeight) - (int) YOffset, Width, RowHeight);
-                    Application.Display.DrawCenteredString(_items[i], left, top + (i * RowHeight) - (int) YOffset, Width, RowHeight);
+                    Application.Display.DrawRectangle(left, top + (i * RowHeight) - (int) YOffset, Width, RowHeight, 0xFF000000);
+                    Application.Display.DrawCenteredString(_items[i], left, top + (i * RowHeight) - (int) YOffset, Width, RowHeight, Application.SystemFont);
                 }
             }
         }

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Windows.Devices.Gpio;
 using Microsoft.Zelig.Support.mbed;
-using Microsoft.Zelig.DISCO_F746NG;
+using Managed.Graphics;
 
 namespace Managed
 {
@@ -23,7 +20,7 @@ namespace Managed
             int dir = 1;
 
             // create double buffered display
-            var display = new STM32F7DiscoDisplay();
+            var canvas = new Canvas();
 
             string infoString = "";
 
@@ -34,7 +31,7 @@ namespace Managed
                 {
                     for (UInt16 y = 0; y < 272; y++)
                     {
-                        display.SetPixel(x, y, (UInt32)(0xFF000000 | (color << 16)));
+                        canvas.SetPixel(x, y, (UInt32)(0xFF000000 | (color << 16)));
                     }
                 }
 
@@ -47,12 +44,12 @@ namespace Managed
                     //    Microsoft.Zelig.Runtime.MemoryManager.Instance.AvailableMemory,
                     //    Microsoft.Zelig.Runtime.MemoryManager.Instance.AllocatedMemory);
 
-                    infoString = "FPS: " + display.Fps.ToString() + " MEMAVAIL: " + Microsoft.Zelig.Runtime.MemoryManager.Instance.AvailableMemory.ToString();
+                    infoString = "FPS: " + canvas.Fps.ToString() + " MEMAVAIL: " + Microsoft.Zelig.Runtime.MemoryManager.Instance.AvailableMemory.ToString();
 
                     lastTick = timer.read_ms();
                 }
 
-                display.DrawString(infoString, 0, 0);
+                //canvas.DrawString(infoString, 0, 0);
 
                 // fade in/out the pixel fill
                 color += dir;
@@ -66,8 +63,8 @@ namespace Managed
                     dir = +1;
                 }
 
-                // show the back buffer - true to lock fps
-                display.Flip(false);
+                // show the back buffer
+                canvas.Flip();
             }
         }
     }

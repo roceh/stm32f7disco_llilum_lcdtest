@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Managed
+namespace Managed.SDCard
 {
-    public unsafe static class SDInterop
+    public unsafe static class SDCardInterop
     {
         public enum FRESULT : byte
         {

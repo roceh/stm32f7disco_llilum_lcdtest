@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Windows.Devices.Gpio;
 using Microsoft.Zelig.Support.mbed;
-using Microsoft.Zelig.DISCO_F746NG;
+using Managed.Graphics;
+using Managed.SDCard;
 
 namespace Managed
 {
@@ -12,8 +11,9 @@ namespace Managed
     /// </summary>
     public class BitmapTest
     {
-        private DiscoBitmap _background;
-        private DiscoBitmap _sprite;
+        private Bitmap _background;
+        private Bitmap _sprite;
+        private Font _font;
 
         public class Sprite
         {
@@ -50,23 +50,23 @@ namespace Managed
 
             // for fps info update
             int lastTick = timer.read_ms();
-
-            // create double buffered display
-            var display = new STM32F7DiscoDisplay();
-
+                        
             string infoString = "";
 
-            SDCard.Mount();
+            SDCardManager.Mount();
 
-            _background = new DiscoBitmap("BACK.DAT", 480, 272);
-            _sprite = new DiscoBitmap("SPRITE.DAT", 64, 64);
+            _background = new Bitmap("BACK.DAT", 480, 272);
+            _sprite = new Bitmap("SPRITE.DAT", 64, 64);
+            _font = Font.LoadFromFile("DEJAVU.FNT");
 
+            // create double buffered display
+            var canvas = new Canvas();
 
             var sprites = new List<Sprite>();
 
             var r = new Random();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 sprites.Add(new Sprite
                 {
@@ -81,12 +81,12 @@ namespace Managed
 
             while (true)
             {
-                display.Clear(_background);
+                canvas.Clear(_background);
 
                 foreach (var sprite in sprites)
                 {
-                    display.DrawBitmap(_sprite, 0, 0, sprite.X, sprite.Y, 64, 64);
-                    sprite.Step(STM32F7DiscoDisplay.ScreenWidth, STM32F7DiscoDisplay.ScreenHeight);
+                    canvas.DrawBitmap(_sprite, 0, 0, sprite.X, sprite.Y, 64, 64);
+                    sprite.Step(Canvas.ScreenWidth, Canvas.ScreenHeight);
                 }
 
                 // show info every couple of seconds
@@ -98,16 +98,15 @@ namespace Managed
                     //    Microsoft.Zelig.Runtime.MemoryManager.Instance.AvailableMemory,
                     //    Microsoft.Zelig.Runtime.MemoryManager.Instance.AllocatedMemory);
 
-                    infoString = "FPS: " + display.Fps.ToString();
-                    //+ " MEMAVAIL: " + Microsoft.Zelig.Runtime.MemoryManager.Instance.AvailableMemory.ToString();
+                    infoString = "FPS: " + canvas.Fps.ToString() + " MEMAVAIL: " + Microsoft.Zelig.Runtime.MemoryManager.Instance.AvailableMemory.ToString();
 
                     lastTick = timer.read_ms();
                 }
+                                
+                canvas.DrawString(infoString, 0, 0, _font);
 
-                display.DrawString(infoString, 0, 0);
-
-                // show the back buffer - true to lock fps
-                display.Flip(true);
+                // show the back buffer
+                canvas.Flip();
             }
         }
     }

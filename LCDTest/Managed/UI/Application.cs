@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Windows.Devices.Gpio;
 using Microsoft.Zelig.Support.mbed;
-using Microsoft.Zelig.DISCO_F746NG;
+using Managed.Graphics;
+using Managed.SDCard;
 
 namespace Managed.UI
 {
@@ -19,8 +18,20 @@ namespace Managed.UI
         /// </summary>
         private const int TouchTrackTolerance = 50;
 
-        private STM32F7DiscoDisplay _display = new STM32F7DiscoDisplay();
-        private STM32F7DiscoTouch _touch = new STM32F7DiscoTouch();
+        /// <summary>
+        /// Used to draw to the LCD screen
+        /// </summary>
+        private Canvas _canvas = new Canvas();
+
+        /// <summary>
+        /// Used to detect touch events
+        /// </summary>
+        private Touch _touch = new Touch();
+
+        /// <summary>
+        /// Default system font
+        /// </summary>
+        private Font _systemFont;
 
         /// <summary>
         /// List of touches current being tracked
@@ -33,14 +44,19 @@ namespace Managed.UI
         private int _nextTouchId = 0;
 
         /// <summary>
+        /// Default system font
+        /// </summary>
+        public Font SystemFont { get { return _systemFont;  } }
+
+        /// <summary>
         /// Interface to LCD
         /// </summary>
-        public STM32F7DiscoDisplay Display { get { return _display; } }
+        public Canvas Display { get { return _canvas; } }
 
         /// <summary>
         /// Interface to Touch controller
         /// </summary>
-        public STM32F7DiscoTouch Touch { get { return _touch; } }
+        public Touch Touch { get { return _touch; } }
 
         /// <summary>
         /// Show debug info on screen
@@ -54,6 +70,11 @@ namespace Managed.UI
         
         public void Run(Control root)
         {
+            SDCardManager.Mount();
+
+            // load in the system font
+            _systemFont = Font.LoadFromFile("DEJAVU.FNT");
+
             var timer = new Timer();
             timer.start();
 
@@ -117,7 +138,7 @@ namespace Managed.UI
 
                     lastUpdateTime = FrameTime;                    
 
-                    Display.Clear(STM32F7DiscoDisplay.LCD_COLOR_WHITE);
+                    Display.Clear(0xFFFFFFFF);
 
                     root.Update(DeltaTime);
                     root.Draw();
@@ -138,11 +159,11 @@ namespace Managed.UI
                             lastDebugTime = timer.read();
                         }
 
-                        Display.DrawString(infoString, 0, 0);
+                        //Display.DrawString(infoString, 0, 0);
                     }
 
                     // show the back buffer
-                    Display.Flip(false);
+                    Display.Flip();
                 }
             }
         }

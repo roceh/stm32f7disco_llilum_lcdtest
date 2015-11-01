@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Microsoft.Zelig.Support.mbed;
-using Microsoft.Zelig.DISCO_F746NG;
 
-namespace Managed
+namespace Managed.Graphics
 {
-    public unsafe class STM32F7DiscoTouch
+    public unsafe class Touch
     {
         /// <summary>
         /// Width of the screen
@@ -21,9 +17,9 @@ namespace Managed
         private UInt32[] _x = new UInt32[5];
         private UInt32[] _y = new UInt32[5];
 
-        public STM32F7DiscoTouch()
+        public Touch()
         {
-            BSP_TS_Init(ScreenWidth, ScreenHeight);
+            DisplayInterop.BSP_TS_Init(ScreenWidth, ScreenHeight);
         }
                 
         /// <summary>
@@ -37,7 +33,7 @@ namespace Managed
             fixed (UInt32* x = _x)
             fixed (UInt32* y = _y)
             {
-                touches = BSP_TS_GetTouchInfo(x, y);
+                touches = DisplayInterop.BSP_TS_GetTouchInfo(x, y);
             }
 
             return touches;
@@ -53,13 +49,6 @@ namespace Managed
         /// </summary>
         public UInt32[] Y { get { return _y; } }
         
-        [DllImport("C")]
-        internal static extern byte BSP_TS_Init(UInt16 sizeX, UInt16 sizeY);
 
-        [DllImport("C")]
-        internal static extern byte BSP_TS_DeInit();
-
-        [DllImport("C")]
-        internal static extern byte BSP_TS_GetTouchInfo(UInt32* x, UInt32* y);
     }
 }

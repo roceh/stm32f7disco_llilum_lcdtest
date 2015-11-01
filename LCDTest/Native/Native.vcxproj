@@ -95,6 +95,7 @@
     <TargetName>$(LlilumOutputName)</TargetName>
     <TargetExt>.elf</TargetExt>
     <ExecutablePath>$(LlilumGccBin);$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(ProjectDir)\;$(ProjectDir)\Memory;$(ProjectDir)\FileSystem;$(ProjectDir)\Display;$(ProjectDir)\Board;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <TargetName>$(LlilumOutputName)</TargetName>
@@ -108,6 +109,7 @@
       <AdditionalOptions>$(LlilumClAdditionalOptions) %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(LlilumClAdditionalIncludes)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>$(LlilumClPreprocessorDefs);DEBUG;USE_STM32746G_DISCOVERY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(LlilumLinkAdditionalDeps)</AdditionalDependencies>
@@ -132,25 +134,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="diskio.c" />
-    <ClCompile Include="ff.c" />
-    <ClCompile Include="ff_cs_helper.c" />
-    <ClCompile Include="ff_gen_drv.c" />
-    <ClCompile Include="font12.c" />
-    <ClCompile Include="font16.c" />
-    <ClCompile Include="font20.c" />
-    <ClCompile Include="font24.c" />
-    <ClCompile Include="font8.c" />
-    <ClCompile Include="ft5336.c" />
-    <ClCompile Include="InteropExports_adc.cpp" />
-    <ClCompile Include="sd_diskio.c" />
-    <ClCompile Include="stm32746g_discovery.c" />
-    <ClCompile Include="stm32746g_discovery_lcd.c" />
-    <ClCompile Include="stm32746g_discovery_sd.c" />
-    <ClCompile Include="stm32746g_discovery_sdram.c" />
-    <ClCompile Include="stm32746g_discovery_ts.c" />
+    <ProjectReference Include="..\Managed\Managed.csproj">
+      <Project>{e70132df-bc09-49a2-b41b-dbd36016a1ae}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Board\stm32746g_discovery.c" />
+    <ClCompile Include="Display\InteropExports_lcd.cpp" />
+    <ClCompile Include="Display\ft5336.c" />
+    <ClCompile Include="Display\stm32746g_discovery_ts.c" />
+    <ClCompile Include="FileSystem\diskio.c" />
+    <ClCompile Include="FileSystem\ff.c" />
+    <ClCompile Include="FileSystem\ff_cs_helper.c" />
+    <ClCompile Include="FileSystem\ff_gen_drv.c" />
+    <ClCompile Include="FileSystem\sd_diskio.c" />
+    <ClCompile Include="FileSystem\stm32746g_discovery_sd.c" />
+    <ClCompile Include="InteropExports_adc.cpp" />
     <ClCompile Include="InteropExports_clock.cpp" />
     <ClCompile Include="InteropExports_core.cpp" />
     <ClCompile Include="InteropExports_debug.cpp" />
@@ -163,37 +162,23 @@
     <ClCompile Include="InteropExports_system_timer.cpp" />
     <ClCompile Include="InteropExports_systick.cpp" />
     <ClCompile Include="InteropExports_threading.cpp" />
+    <ClCompile Include="Memory\stm32746g_discovery_sdram.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="diskio.h" />
-    <ClInclude Include="ff.h" />
-    <ClInclude Include="ffconf.h" />
-    <ClInclude Include="ffconf_template.h" />
-    <ClInclude Include="ff_gen_drv.h" />
-    <ClInclude Include="fonts.h" />
-    <ClInclude Include="ft5336.h" />
+    <ClInclude Include="Board\stm32746g_discovery.h" />
+    <ClInclude Include="Display\ft5336.h" />
+    <ClInclude Include="Display\stm32746g_discovery_ts.h" />
+    <ClInclude Include="Display\ts.h" />
+    <ClInclude Include="FileSystem\diskio.h" />
+    <ClInclude Include="FileSystem\ff.h" />
+    <ClInclude Include="FileSystem\ffconf.h" />
+    <ClInclude Include="FileSystem\ffconf_template.h" />
+    <ClInclude Include="FileSystem\ff_gen_drv.h" />
+    <ClInclude Include="FileSystem\integer.h" />
+    <ClInclude Include="FileSystem\sd_diskio.h" />
+    <ClInclude Include="FileSystem\stm32746g_discovery_sd.h" />
     <ClInclude Include="helpers.h" />
-    <ClInclude Include="integer.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="rk043fn48h.h" />
-    <ClInclude Include="sd_diskio.h" />
-    <ClInclude Include="stm32746g_discovery.h" />
-    <ClInclude Include="stm32746g_discovery_lcd.h" />
-    <ClInclude Include="stm32746g_discovery_sd.h" />
-    <ClInclude Include="stm32746g_discovery_sdram.h" />
-    <ClInclude Include="stm32746g_discovery_ts.h" />
-    <ClInclude Include="ts.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Managed\Managed.csproj">
-      <Project>{e70132df-bc09-49a2-b41b-dbd36016a1ae}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="mbed_simple.FrontEndConfig" />
-    <None Include="mbed_simple_DISCO_F746NG.FrontEndConfig" />
-    <None Include="mbed_simple_K64F.FrontEndConfig" />
-    <None Include="mbed_simple_LPC1768.FrontEndConfig" />
+    <ClInclude Include="Memory\stm32746g_discovery_sdram.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

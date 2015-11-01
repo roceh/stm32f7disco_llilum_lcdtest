@@ -1,171 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="stm32746g_discovery.c" />
-    <ClCompile Include="diskio.c">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="ff.c">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="ff_gen_drv.c">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="font8.c">
-      <Filter>Screen</Filter>
-    </ClCompile>
-    <ClCompile Include="font12.c">
-      <Filter>Screen</Filter>
-    </ClCompile>
-    <ClCompile Include="font16.c">
-      <Filter>Screen</Filter>
-    </ClCompile>
-    <ClCompile Include="font20.c">
-      <Filter>Screen</Filter>
-    </ClCompile>
-    <ClCompile Include="font24.c">
-      <Filter>Screen</Filter>
-    </ClCompile>
-    <ClCompile Include="ft5336.c">
-      <Filter>Screen</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_adc.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_clock.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_core.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_debug.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_gpio.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_i2c.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_mem.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_nvic.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_serial.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_spi.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_system_timer.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_systick.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="InteropExports_threading.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="stm32746g_discovery_lcd.c">
-      <Filter>Screen</Filter>
-    </ClCompile>
-    <ClCompile Include="stm32746g_discovery_sd.c">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="stm32746g_discovery_sdram.c">
-      <Filter>SDRAM</Filter>
-    </ClCompile>
-    <ClCompile Include="stm32746g_discovery_ts.c">
-      <Filter>Screen</Filter>
-    </ClCompile>
-    <ClCompile Include="sd_diskio.c">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="ff_cs_helper.c">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
+    <ClCompile Include="Board\stm32746g_discovery.c" />
+    <ClCompile Include="Display\ft5336.c" />
+    <ClCompile Include="Display\stm32746g_discovery_ts.c" />
+    <ClCompile Include="FileSystem\diskio.c" />
+    <ClCompile Include="FileSystem\ff.c" />
+    <ClCompile Include="FileSystem\ff_cs_helper.c" />
+    <ClCompile Include="FileSystem\ff_gen_drv.c" />
+    <ClCompile Include="FileSystem\sd_diskio.c" />
+    <ClCompile Include="FileSystem\stm32746g_discovery_sd.c" />
+    <ClCompile Include="Memory\stm32746g_discovery_sdram.c" />
+    <ClCompile Include="InteropExports_adc.cpp" />
+    <ClCompile Include="InteropExports_clock.cpp" />
+    <ClCompile Include="InteropExports_core.cpp" />
+    <ClCompile Include="InteropExports_debug.cpp" />
+    <ClCompile Include="InteropExports_gpio.cpp" />
+    <ClCompile Include="InteropExports_i2c.cpp" />
+    <ClCompile Include="InteropExports_mem.cpp" />
+    <ClCompile Include="InteropExports_nvic.cpp" />
+    <ClCompile Include="InteropExports_serial.cpp" />
+    <ClCompile Include="InteropExports_spi.cpp" />
+    <ClCompile Include="InteropExports_system_timer.cpp" />
+    <ClCompile Include="InteropExports_systick.cpp" />
+    <ClCompile Include="InteropExports_threading.cpp" />
+    <ClCompile Include="Display\InteropExports_lcd.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Board\stm32746g_discovery.h" />
+    <ClInclude Include="Display\ft5336.h" />
+    <ClInclude Include="Display\stm32746g_discovery_ts.h" />
+    <ClInclude Include="Display\ts.h" />
+    <ClInclude Include="FileSystem\diskio.h" />
+    <ClInclude Include="FileSystem\ff.h" />
+    <ClInclude Include="FileSystem\ff_gen_drv.h" />
+    <ClInclude Include="FileSystem\ffconf.h" />
+    <ClInclude Include="FileSystem\ffconf_template.h" />
+    <ClInclude Include="FileSystem\integer.h" />
+    <ClInclude Include="FileSystem\sd_diskio.h" />
+    <ClInclude Include="FileSystem\stm32746g_discovery_sd.h" />
+    <ClInclude Include="Memory\stm32746g_discovery_sdram.h" />
     <ClInclude Include="helpers.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="stm32746g_discovery.h" />
-    <ClInclude Include="diskio.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="ff.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="ff_gen_drv.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="ffconf.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="ffconf_template.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="ft5336.h">
-      <Filter>Screen</Filter>
-    </ClInclude>
-    <ClInclude Include="fonts.h">
-      <Filter>Screen</Filter>
-    </ClInclude>
-    <ClInclude Include="stm32746g_discovery_lcd.h">
-      <Filter>Screen</Filter>
-    </ClInclude>
-    <ClInclude Include="stm32746g_discovery_sd.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="stm32746g_discovery_sdram.h">
-      <Filter>SDRAM</Filter>
-    </ClInclude>
-    <ClInclude Include="stm32746g_discovery_ts.h">
-      <Filter>Screen</Filter>
-    </ClInclude>
-    <ClInclude Include="sd_diskio.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="rk043fn48h.h">
-      <Filter>Screen</Filter>
-    </ClInclude>
-    <ClInclude Include="integer.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="ts.h">
-      <Filter>Screen</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="mbed_simple.FrontEndConfig">
-      <Filter>Configs</Filter>
-    </None>
-    <None Include="mbed_simple_DISCO_F746NG.FrontEndConfig">
-      <Filter>Configs</Filter>
-    </None>
-    <None Include="mbed_simple_K64F.FrontEndConfig">
-      <Filter>Configs</Filter>
-    </None>
-    <None Include="mbed_simple_LPC1768.FrontEndConfig">
-      <Filter>Configs</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Interops">
-      <UniqueIdentifier>{b79f7c8d-a022-456a-ac41-d63a819deffc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Configs">
-      <UniqueIdentifier>{ed4dcfa6-bcbd-4d09-b2f1-96b1f159315e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FileSystem">
-      <UniqueIdentifier>{e26cf64c-7ac3-49b4-8527-220e66412a99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SDRAM">
-      <UniqueIdentifier>{3ca8491d-da2c-41da-a319-f5caf797c1ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Screen">
-      <UniqueIdentifier>{a71755ee-0b94-41df-a48e-e7164c5c3cd1}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>

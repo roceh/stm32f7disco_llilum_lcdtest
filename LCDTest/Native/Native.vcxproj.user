@@ -5,10 +5,13 @@
     <LlilumPyOcdArgs>-p 3333</LlilumPyOcdArgs>
     <DebuggerFlavor>LlilumDebugger</DebuggerFlavor>
     <LlilumFlashToolPath>$(LlilumSDK)tools\st-flash.exe</LlilumFlashToolPath>
-    <LlilumDebuggerDebuggerAttach>false</LlilumDebuggerDebuggerAttach>
-    <LlilumUseFlashTool>true</LlilumUseFlashTool>
+    <LlilumDebuggerDebuggerAttach>true</LlilumDebuggerDebuggerAttach>
+    <LlilumUseFlashTool>false</LlilumUseFlashTool>
     <LlilumGdbArgs>
     </LlilumGdbArgs>
     <LlilumFlashToolArgs>write $(OutDir)\$(LlilumOutputName).bin 0x8000000</LlilumFlashToolArgs>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
 </Project>

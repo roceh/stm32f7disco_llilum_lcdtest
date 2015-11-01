@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
+using Managed.SDCard;
 
 namespace Managed
 {
@@ -10,7 +7,7 @@ namespace Managed
     {
         public void Run()
         {
-            SDCard.Mount();
+            SDCardManager.Mount();
 
             Debug.Instance.Log("opening for write...");
 
